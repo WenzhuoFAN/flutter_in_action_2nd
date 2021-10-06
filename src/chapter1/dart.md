@@ -12,38 +12,38 @@ Dart 在静态语法方面和 Java 非常相似，如类型定义、函数声明
 
 
 
-## 1.4.1 变量声明
+## 1.4.1 変数宣言
 
 1. **var**
 
-   类似于 JavaScript 中的`var`，它可以接收任何类型的变量，但最大的不同是 Dart 中 var 变量一旦赋值，类型便会确定，则不能再改变其类型，如：
+   JavaScript の`var`と似っています，どんな値型の変数を受け取ることも可能です，一番違うところは Dart 中の var 変数に値を渡したら，値型が確定されます，変更出来ません。
+   列：
 
    ```dart
    var t;
    t = "hi world";
-   // 下面代码在dart中会报错，因为变量t的类型已经确定为String，
-   // 类型一旦确定后则不能再更改其类型。
+   // 次のcodeはdartのもとでエラーが出て来る，原因は変数tの値型がstringに確定されています
+   // 値型が一旦確定され，変更出来ません。
    t = 1000;
    ```
 
-   上面的代码在 JavaScript 是没有问题的，前端开发者需要注意一下，之所以有此差异是因为 Dart 本身是一个强类型语言，任何变量都是有确定类型的，在 Dart 中，当用`var`声明一个变量后，Dart 在编译时会根据第一次赋值数据的类型来推断其类型，编译结束后其类型就已经被确定，而 JavaScript 是纯粹的弱类型脚本语言，var 只是变量的声明方式而已。
+   上記のcodeは JavaScript で実行するには問題がありません，フロントエンド開発者は注意するべきことは， Dart 自身がstrongly typed言語ですから，変数それぞれ値型が確定されています。
+2. **dynamic **と **Object**
 
-2. **dynamic **和 **Object**
-
-    `Object` 是 Dart 所有对象的根基类，也就是说在 Dart 中所有类型都是`Object`的子类(包括Function和Null)，所以任何类型的数据都可以赋值给`Object`声明的对象。
-    `dynamic`与`Object `声明的变量都可以赋值任意对象，且后期可以改变赋值的类型，这和 `var` 是不同的，如：
+    `Object` は Dart 中全てのオブジェクトのsuperclassであり，つまり Dart でどんな値型でも　Object　で宣言されたオブジェクトに渡すことが可能です
+    `dynamic`と`Object `宣言した変数は任意オブジェクトに代入できます，それに代入した変数の値型が変更可能です，これは `var` と違う特性だ。　列：
     
     ```dart
     dynamic t;
     Object x;
     t = "hi world";
     x = 'Hello Object';
-    //下面代码没有问题
+    //実行エラーなし
     t = 1000;
     x = 1000;
     ```
     
-   `dynamic`与`Object`不同的是`dynamic`声明的对象编译器会提供所有可能的组合，而`Object`声明的对象只能使用 `Object` 的属性与方法, 否则编译器会报错，如:
+   `dynamic`と`Object`の違いは`dynamic`が宣言したオブジェクトに対してコンパイラはすべての組み合わせが提供できる`Object`が宣言したオブジェクトは`Object`のアトリビュートとメソードしか使えません、じゃないとコンパイルエラーが発生する。列:
    
    ```dart
     dynamic a;
@@ -56,20 +56,20 @@ Dart 在静态语法方面和 Java 非常相似，如类型定义、函数声明
     printLengths() {
       // 正常
    print(a.length);
-      // 报错 The getter 'length' is not defined for the class 'Object'
+      // エラー The getter 'length' is not defined for the class 'Object'
       print(b.length);
     }
    ```
    
-   `dynamic`  的这个特点使得我们在使用它时需要格外注意，这很容易引入一个运行时错误，比如下面代码在编译时不会报错，而在运行时会报错：
+   `dynamic` この特性により、実行エラーが出やすい，例えば次のcodeは在コンパイルエラーにならないけど，実行エラーが出る：
    
    ```dart
-   print(a.xx); // a是字符串，没有"xx"属性，编译时不会报错，运行时会报错
+   print(a.xx); // aはsting型です，"xx"と言うアトリビュートはありません
    ```
 
-3. **final**和**const**
+3. **final**と**const**
 
-   如果您从未打算更改一个变量，那么使用 `final` 或 `const`，不是`var`，也不是一个类型。 一个 `final` 变量只能被设置一次，两者区别在于：`const` 变量是一个编译时常量（编译时直接替换为常量值），`final`变量在第一次使用时被初始化。被`final`或者`const`修饰的变量，变量类型可以省略，如：
+   変数を変更しない場合，那么使用 `final` 或 `const`，不是`var`，也不是一个类型。 一个 `final` 变量只能被设置一次，两者区别在于：`const` 变量是一个编译时常量（编译时直接替换为常量值），`final`变量在第一次使用时被初始化。被`final`或者`const`修饰的变量，变量类型可以省略，如：
 
    ```dart
    //可以省略String这个类型声明
